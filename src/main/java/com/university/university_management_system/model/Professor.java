@@ -27,6 +27,10 @@ public class Professor {
     @OneToMany(mappedBy = "professor", fetch = FetchType.LAZY)
     private Set<Course> courses = new HashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
     public Professor() {
     }
 
@@ -90,6 +94,14 @@ public class Professor {
     public void removeCourse(Course course){
         courses.remove(course);
         course.setProfessor(null);
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override
