@@ -17,6 +17,10 @@ public class Course {
 
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "professor_id")
+    private Professor professor;
+
     public Course() {
     }
 
@@ -57,6 +61,14 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
     @Override

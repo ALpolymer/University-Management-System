@@ -3,6 +3,10 @@ package com.university.university_management_system.model;
 
 import jakarta.persistence.*;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "professors")
 public class Professor {
@@ -19,6 +23,9 @@ public class Professor {
 
     @Column (nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "professor", fetch = FetchType.LAZY)
+    private Set<Course> courses = new HashSet<>();
 
     public Professor() {
     }
@@ -60,6 +67,29 @@ public class Professor {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public Set<Course> getAllCourses(){
+        return Collections.unmodifiableSet(courses);
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
+    public void addCourse(Course course){
+        if(courses == null) courses = new HashSet<>();
+        this.courses.add(course);
+        course.setProfessor(this);
+    }
+
+    public void removeCourse(Course course){
+        courses.remove(course);
+        course.setProfessor(null);
     }
 
     @Override
