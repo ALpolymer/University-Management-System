@@ -3,6 +3,9 @@ package com.university.university_management_system.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "students")
@@ -20,6 +23,7 @@ public class Student {
 
     @Column (nullable = false)
     private LocalDate enrollmentDate;
+
 
     public Student() {
     }
@@ -62,6 +66,8 @@ public class Student {
     public void setEnrollmentDate(LocalDate enrollmentDate) {
         this.enrollmentDate = enrollmentDate;
     }
+
+
 
     @Override
     public String toString(){

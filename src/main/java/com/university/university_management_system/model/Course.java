@@ -2,6 +2,10 @@ package com.university.university_management_system.model;
 
 import jakarta.persistence.*;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "courses")
 public class Course {
@@ -20,6 +24,7 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "professor_id")
     private Professor professor;
+
 
     public Course() {
     }
@@ -70,6 +75,8 @@ public class Course {
     public void setProfessor(Professor professor) {
         this.professor = professor;
     }
+
+
 
     @Override
     public String toString(){
