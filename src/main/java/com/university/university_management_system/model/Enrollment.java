@@ -24,10 +24,9 @@ public class Enrollment {
     @JoinColumn(name = "course_id")
     private Course course;
 
-
-
     public Enrollment() {
     }
+
 
     public Enrollment(Long id, int grade, LocalDate enrollmentDate, Student student, Course course) {
         this.id = id;

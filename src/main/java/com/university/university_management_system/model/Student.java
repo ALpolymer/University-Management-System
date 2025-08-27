@@ -24,6 +24,9 @@ public class Student {
     @Column (nullable = false)
     private LocalDate enrollmentDate;
 
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private Set<Enrollment> enrollments = new HashSet<>();
+
 
     public Student() {
     }
@@ -67,7 +70,28 @@ public class Student {
         this.enrollmentDate = enrollmentDate;
     }
 
+    protected Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
 
+    public Set<Enrollment> getAllEnrollments() {
+        return Collections.unmodifiableSet(enrollments);
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
+
+    public void addEnrollment(Enrollment enrollment){
+        if(enrollments == null) enrollments = new HashSet<>();
+        enrollments.add(enrollment);
+        enrollment.setStudent(this);
+    }
+
+    public void removeEnrollment(Enrollment enrollment){
+        enrollments.remove(enrollment);
+        enrollment.setStudent(null);
+    }
 
     @Override
     public String toString(){

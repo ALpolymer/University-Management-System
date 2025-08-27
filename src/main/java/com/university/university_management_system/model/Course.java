@@ -25,15 +25,18 @@ public class Course {
     @JoinColumn(name = "professor_id")
     private Professor professor;
 
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private Set<Enrollment> enrollments = new HashSet<>();
 
     public Course() {
     }
 
-    public Course(Long id, String title, int credits, String description) {
+    public Course(Long id, String title, int credits, String description, Professor professor) {
         this.id = id;
         this.title = title;
         this.credits = credits;
         this.description = description;
+        this.professor = professor;
     }
 
     public Long getId() {
@@ -76,7 +79,28 @@ public class Course {
         this.professor = professor;
     }
 
+    protected Set<Enrollment> getEnrollments() {
+        return enrollments;
+    }
 
+    public Set<Enrollment> getAllEnrollments() {
+        return Collections.unmodifiableSet(enrollments);
+    }
+
+    public void setEnrollments(Set<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
+
+    public void addEnrollment(Enrollment enrollment){
+        if (enrollments==null) enrollments = new HashSet<>();
+        enrollments.add(enrollment);
+        enrollment.setCourse(this);
+    }
+
+    public void removeEnrollment(Enrollment enrollment) {
+        enrollments.remove(enrollment);
+        enrollment.setCourse(null);
+    }
 
     @Override
     public String toString(){
@@ -85,6 +109,7 @@ public class Course {
                 ", title='" + title + '\'' +
                 ", credits='" + credits + '\'' +
                 ", description='" + description + '\'' +
+                ", professor='" + professor + '\'' +
                 '}';
     }
 }
